@@ -11,6 +11,7 @@ const Products = () => {
          <ProductItem/>
         </Row>
         </Card>
+        
     </div>
   )
 }
