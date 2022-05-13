@@ -3,6 +3,15 @@ export const ProductsApi=createApi({
     reducerPath:"productsApi",
     baseQuery:fetchBaseQuery({
         baseUrl:"http://localhost:4000/",
+        prepareHeaders: (headers, { getState }) => {
+          const token = localStorage.getItem("testtoken")
+          console.log("toke",token)
+          // If we have a token set in state, let's assume that we should be passing it.
+          if (token) {
+            headers.set('authorization', `Bearer ${token}`)
+          }
+          return headers
+        },
 }),
 tagTypes:["Product"],
 endpoints:(builder)=>({
@@ -15,7 +24,7 @@ endpoints:(builder)=>({
     query:(product)=>({
       url:"products",
       method:"POST",
-      data:product
+      body:product
     }),
     invalidatesTags:['Product']
   }),
@@ -33,10 +42,20 @@ endpoints:(builder)=>({
       method:"DELETE",
     }),
     invalidatesTags:['Product']
-  })
+  }),
+  addProductsByToken:builder.mutation({
+    query:(product)=>(
+      {
+      url:"api/v1/productstoken",
+      method:"POST",
+      body:product
+    }),
+    invalidatesTags:['Product']
+  }),
 //   getProductsById:builder.query({
 //       query:(id)=>"products/"+id
 //   })
 })
 })
-export const {useGetProductsQuery,useAddProductsMutation,useUpdateProductMutation,useDeleteProductMutation}=ProductsApi
+export const {useGetProductsQuery,useAddProductsMutation,useUpdateProductMutation,
+  useDeleteProductMutation,useAddProductsByTokenMutation}=ProductsApi

@@ -3,25 +3,30 @@ import { Input,Button,Row, Col,Card, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useAddProductMutation } from '../Redux/Services/axiosProducts';
 import {  useNavigate } from 'react-router-dom';
+// import { useAddProductByTokenMutation } from '../Redux/Services/axiostokenProducts';
+// import { useAddProductsByTokenMutation } from '../Redux/Services/Products';
+import { useAddProductByTokenMutation } from '../Redux/Services/axiostokenProducts';
 const AddProduct = () => {
   const navigate=useNavigate();
+  const userId = JSON.parse(localStorage.getItem("testuserdata"))?.id;
+  console.log("userr",userId);
   const [productdata, setdata] = useState({
     title: "",
     category: "",
     price: "",
-    description: ""
+    description: "",
+    userId
   });
   const handleChange=(e)=>{
     setdata({...productdata,[e.target.name]:e.target.value})
    }
-   const [addProduct,{isLoading,data:custom}]=useAddProductMutation()
-   console.log("datacheck",custom);
-   console.log(useAddProductMutation());
-  //  console.log(data);
+   const [addProduct,{isLoading}]=useAddProductByTokenMutation()
+  // const [addProduct,{isLoading}]=useAddProductsByTokenMutation();
    const handleSubmit=async(e)=>{
     // console.log("data",data)
+    console.log("products",productdata);
      await addProduct(productdata);
-    //  navigate("/")
+     navigate("/")
   }
   //  console.log("data",data);
   return (
@@ -32,7 +37,9 @@ const AddProduct = () => {
    <Input size="large" 
   value={productdata?.title}
   name="title"
- placeholder="title" prefix={<UserOutlined />} onChange={handleChange} />
+ placeholder="title" 
+ prefix={<UserOutlined />} 
+ onChange={handleChange} />
   </Col>
     <br />
     <br />

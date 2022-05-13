@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from './axiosInstance'
 const axiosBaseQuery =
   ({ baseUrl } = { baseUrl: '' }) =>
   async ({ url, method, data, params }) => {
@@ -9,6 +9,7 @@ const axiosBaseQuery =
       meta:result.status}
     } catch (axiosError) {
       let err = axiosError
+      console.log("response",err)
       return {
         error: {
           status: err.response?.status,
@@ -18,3 +19,9 @@ const axiosBaseQuery =
     }
   }
   export default axiosBaseQuery
+  export const gettoken = (sKey) => 
+{
+  
+      return localStorage.getItem(sKey)
+   
+}

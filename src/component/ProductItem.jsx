@@ -8,6 +8,7 @@ const key = "deletable";
 const ProductItem = ({data}) => {
   const navigate=useNavigate();
   const [deleteProduct]=useDeleteProductMutation();
+  const userId = JSON.parse(localStorage.getItem("testuserdata"))?.id;
 const { Meta } = Card;
 console.log(data);
 const handleChange=(id)=>{
@@ -25,13 +26,20 @@ const handleChange=(id)=>{
       />
     }
     actions={[
+      userId===data?.userId &&
         <EyeOutlined key="eye" 
         onClick={()=>navigate(`/product/${data?.id}`)}
         />,
+        userId===data?.userId &&
       <EditOutlined key="edit" 
       onClick={()=>navigate(`/editproduct/${data?.id}`)}
       />,
-      <DeleteOutlined key="delete" onClick={()=>handleChange(data?.id)} />,
+      userId===data?.userId &&
+      <DeleteOutlined 
+      key="delete" 
+      onClick={()=>handleChange(data?.id)}
+      // disabled="true"
+       />,
     ]}
   >
     <Meta

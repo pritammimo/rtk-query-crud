@@ -2,13 +2,17 @@ import React,{useState,useEffect} from 'react'
 import { Input,Button,Row, Col,Card, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import {
+  useNavigate,
   useParams,
 } from "react-router-dom";
 import { useGetSingleProductQuery, useUpdateProductMutation } from '../Redux/Services/axiosProducts';
+import { useUpdateProductByTokenMutation } from '../Redux/Services/axiostokenProducts';
 const EditProduct = () => {
   let { id } = useParams();
+  const navigate=useNavigate()
   const {data:productdata}=useGetSingleProductQuery(id);
-  const [UpdateProduct]=useUpdateProductMutation()
+  // const [UpdateProduct]=useUpdateProductMutation()
+  const [UpdateProduct]=useUpdateProductByTokenMutation();
   console.log(productdata);
   const [data, setdata] = useState({
     title: "",
@@ -27,7 +31,7 @@ const EditProduct = () => {
    const handleSubmit=async(e)=>{
       console.log("data",data)
     await UpdateProduct(data);
-    navigate("/")
+    navigate("/products")
     }
   return (
     <Card title="Create a new Product">
