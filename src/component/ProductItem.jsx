@@ -4,9 +4,10 @@ import { EditOutlined, EllipsisOutlined, SettingOutlined,DeleteOutlined, EyeOutl
 import 'antd/dist/antd.css';
 import { useNavigate } from 'react-router-dom';
 const key = "deletable";
-const ProductItem = () => {
+const ProductItem = ({id,title,description,price,category}) => {
   const navigate=useNavigate();
 const { Meta } = Card;
+console.log("title",title);
   return (
       <>
       <Col span={6} key="column">
@@ -15,23 +16,23 @@ const { Meta } = Card;
     cover={
       <img
         alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+        src={`https://loremflickr.com/320/240/dress?random=${id}`}
       />
     }
     actions={[
         <EyeOutlined key="eye" 
-        onClick={()=>navigate("/product/1")}
+        onClick={()=>navigate(`product/${id}`)}
         />,
       <EditOutlined key="edit" 
-      onClick={()=>navigate("/editproduct")}
+      onClick={()=>navigate(`/editproduct/${id}`)}
       />,
       <DeleteOutlined key="delete" />,
     ]}
   >
     <Meta
-      avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-      title="Card title"
-      description="This is the description"
+      avatar={<Avatar src={`https://joeschmoe.io/api/v1/random=${id}`} />}
+      title={title}
+      description={description}
     />
   </Card>,
   </Col>
