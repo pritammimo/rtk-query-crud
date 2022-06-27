@@ -13,7 +13,7 @@ const AddProduct = () => {
   const handleChange=(e)=>{
     setdata({...productdata,[e.target.name]:e.target.value})
    }
-  //  console.log("product",productdata);
+  console.log("product",productdata);
    
    const { isLoading: isPostingTutorial, mutate: postProduct } = useMutation(
     async (data) => {
