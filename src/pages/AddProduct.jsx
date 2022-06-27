@@ -19,10 +19,6 @@ const AddProduct = () => {
     async (data) => {
       console.log("data",data);
       return await axios.post(`/products`, 
-      // {
-      //   title: postTitle,
-      //   description: postDescription,
-      // }
       data
       );
     },
